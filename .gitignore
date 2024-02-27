@@ -1,0 +1,10 @@
+*.*
+*
+!*/
+!/app_pcie/**
+!/doc/*
+!/driver/*
+!README.md
+!.gitignore
+!run.sh
+
