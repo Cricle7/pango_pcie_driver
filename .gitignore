@@ -4,7 +4,9 @@
 !/.vscode/**
 !/app_pcie/**
 !/doc/*
-!/driver/*
+!/driver/*.h
+!/driver/*.c
+!/driver/Makefile
 !README.md
 !.gitignore
 !run.sh

@@ -734,6 +734,7 @@ int __init init_pci_pango(void)
 	return result;
 }
 
+// 模块卸载函数
 void __exit exit_pci_pango(void)
 {
 	exit_pango_cdev_class(pci_info._cdev_class);
