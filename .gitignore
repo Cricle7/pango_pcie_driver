@@ -1,6 +1,7 @@
 *.*
 *
 !*/
+!/.vscode/**
 !/app_pcie/**
 !/doc/*
 !/driver/*
