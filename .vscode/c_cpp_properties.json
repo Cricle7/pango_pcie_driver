@@ -4,6 +4,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "/lib/modules/6.5.0-21-generic",
+                "/usr/include/linux/*",
                 "/usr/src/linux-hwe-6.5-headers-6.5.0-21/include",
                 "/usr/src/linux-headers-6.5.0-21-generic/arch/x86/include/generated"
             ],
