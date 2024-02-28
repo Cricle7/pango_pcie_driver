@@ -15,3 +15,4 @@ module_test.c
     │     
     └── MODULE_LICENSE("GPL");
 ```
+vscode 配置借鉴https://github.com/amezin/vscode-linux-kernel.git

@@ -3,5 +3,4 @@
 
 #define PCI_PANGO_DEFAULT_VENDOR_ID 	0x0755
 #define PCI_PANGO_DEFAULT_DEVICE_ID 	0x0755
-
-#endif // _ID_CONFIG_H_
+#endif
