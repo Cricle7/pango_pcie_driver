@@ -1,6 +1,11 @@
 *.*
 *
 .vscode_backup/
+*.o
+*.cmd
+*.ko
+*.mod
+*.mod.c
 !*/
 !/.vscode/**
 !/app_pcie/**
