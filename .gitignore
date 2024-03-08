@@ -8,6 +8,7 @@
 *.mod.c
 !*/
 !/.vscode/**
+app_pcie/build/
 !/app_pcie/**
 !/doc/*
 !/driver/*.h
@@ -16,4 +17,4 @@
 !README.md
 !.gitignore
 !run.sh
-
+!code/*
