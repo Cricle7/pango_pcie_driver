@@ -8,7 +8,8 @@
 *.mod.c
 !*/
 !/.vscode/**
-!/app_pcie/**
+!/app_pcie/include/*
+!/app_pcie/sources/*
 !/doc/*
 !/driver/*.h
 !/driver/*.c
