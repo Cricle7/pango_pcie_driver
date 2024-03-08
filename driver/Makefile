@@ -3,7 +3,6 @@ ifeq ($(KERNELRELEASE),)
 #ifeq后面一定要加空格
 #非命令行前面不能以tab开头，必须以空格开头
  KERNELDIR ?= /lib/modules/$(shell uname -r)/build  
-# KERNELDIR ?= /lib/modules/4.19.307-1-MANJARO/build
  #KERNELDIR ?= /usr/src/linux-headers-6.5.0-21-generic/include/linux
  KERNEL ?= /usr/src/linux-hwe-6.5-headers-6.5.0-21/include
  USR ?= /usr/src/linux-headers-6.5.0-21-generic/arch/x86/include/generated

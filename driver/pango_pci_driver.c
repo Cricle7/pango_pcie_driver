@@ -13,11 +13,11 @@
 #define PCI_DRIVER_DEV_NAME "pango_pci_driver"
 
 struct file_operations pango_cdev_fops = {
-	.owner   = THIS_MODULE,//惯例，所有的驱动都有这一个，这也是这结构体中唯一一个不是函数指针的元素
+	.owner   = THIS_MODULE,
 	.llseek  = pango_cdev_llseek,
 	.read    = pango_cdev_read,
 	.write   = pango_cdev_write,
-	.open    = pango_cdev_open,//将来应用open打开这个这个设备时实际调用的函数
+	.open    = pango_cdev_open,
 	.unlocked_ioctl = pango_cdev_ioctl,
 	.release = pango_cdev_release,
 };
@@ -746,8 +746,8 @@ void __exit exit_pci_pango(void)
 	LOG("exit_pci_pango.\n");
 }
 
-module_init(init_pci_pango);//insmod 时调用
-module_exit(exit_pci_pango);//rmmod  时调用
+module_init(init_pci_pango);
+module_exit(exit_pci_pango);
 
 
 /* 添加模块描述信息 */
