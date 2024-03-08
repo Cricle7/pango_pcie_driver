@@ -24,4 +24,18 @@ else
  # //-m 表示我们要将module_test.c编译成一个模块
  # //-y表示我们要将module_test.c编译链接进zImage
 endif
+OBJ_FILE := $(obj-m)
+SRC_FILE := $(OBJ_FILE:.o=.c)
+CMD_FILE := .$(OBJ_FILE).cmd
+MODNAME := $(OBJ_FILE:.o=)
+insmod:
+	/sbin/insmod $(MODNAME).ko
+
+rmmod:
+	/sbin/rmmod $(MODNAME)
+
+reload:
+	-/sbin/rmmod $(MODNAME)
+	/sbin/insmod $(MODNAME).ko
+
 
