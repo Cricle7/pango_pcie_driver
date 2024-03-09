@@ -7,12 +7,14 @@
 *.mod
 *.mod.c
 !*/
-!/.vscode/**
+!/.vscode/*
 !/app_pcie/include/*
 !/app_pcie/sources/*
+!/app_pcie/Makefile
+!/app_pcie/test.txt
 !/doc/*
 !/driver/*.h
-!/driver/*.c
+!/driver/pango_pci_driver.c
 !/driver/Makefile
 !README.md
 !.gitignore
