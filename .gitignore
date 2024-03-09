@@ -5,6 +5,7 @@
 *.ko
 *.mod
 *.mod.c
+.vscode_backup/
 !*/
 !/.vscode/*
 !/app_pcie/include/*
