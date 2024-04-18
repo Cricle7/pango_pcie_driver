@@ -19,7 +19,6 @@
 #include <linux/ctype.h>
 
 
-
 #define TYPE 'S'
 #define PCI_READ_DATA_CMD    			_IOWR(TYPE, 0, int)							/* 读数据指令 */
 #define PCI_WRITE_DATA_CMD    			_IOWR(TYPE, 1, int)							/* 写数据指令 */
