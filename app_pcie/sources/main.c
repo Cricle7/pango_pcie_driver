@@ -1,4 +1,9 @@
 #include "config_gui.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sndfile.h>
+#include <portaudio.h>
 
 gboolean quit_window( GtkWidget *Widget, gpointer Data );
 gboolean clean_button( GtkWidget *Widget, gpointer Data );
@@ -546,6 +551,77 @@ enum AllFrame									/* 主窗口Frame等主部件的高度和宽度偏移量*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 
+/*--------------------------------------------------------------------------------------------------------------------*/
+//音频功能
+
+#define FRAMES_PER_BUFFER 512
+
+typedef struct {
+    SNDFILE *file;
+    SF_INFO info;
+} AudioData;
+
+static int paCallback(const void *inputBuffer, void *outputBuffer,
+                      unsigned long framesPerBuffer,
+                      const PaStreamCallbackTimeInfo* timeInfo,
+                      PaStreamCallbackFlags statusFlags,
+                      void *userData) {
+    AudioData *data = (AudioData*)userData;
+    sf_count_t numRead = sf_readf_float(data->file, (float*)outputBuffer, framesPerBuffer);
+
+    if (numRead < framesPerBuffer) {
+        memset((float*)outputBuffer + numRead * data->info.channels, 0, (framesPerBuffer - numRead) * data->info.channels * sizeof(float));
+        return paComplete;
+    }
+    return paContinue;
+}
+
+int audio_stream(char *argv[]) {
+    AudioData data;
+    data.file = sf_open(argv[1], SFM_READ, &data.info);
+    if (!data.file) {
+        printf("Failed to open file '%s': %s\n", argv[1], sf_strerror(NULL));
+        return 1;
+    }
+
+    PaError err = Pa_Initialize();
+    if (err != paNoError) {
+        printf("PortAudio error: %s\n", Pa_GetErrorText(err));
+        return 1;
+    }
+
+    PaStream *stream;
+    err = Pa_OpenDefaultStream(&stream,
+                               0,
+                               data.info.channels,
+                               paFloat32,
+                               data.info.samplerate,
+                               FRAMES_PER_BUFFER,
+                               paCallback,
+                               &data);
+    if (err != paNoError) {
+        printf("PortAudio error: %s\n", Pa_GetErrorText(err));
+        return 1;
+    }
+
+    err = Pa_StartStream(stream);
+    if (err != paNoError) {
+        printf("PortAudio error: %s\n", Pa_GetErrorText(err));
+        return 1;
+    }
+
+    printf("Playing...\n");
+    while (Pa_IsStreamActive(stream)) {
+        Pa_Sleep(100);
+    }
+
+    Pa_CloseStream(stream);
+    Pa_Terminate();
+    sf_close(data.file);
+    printf("Done.\n");
+    return 0;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
 
 SCREEN_INFO GuiScreen[] = 
 {
@@ -912,6 +988,8 @@ gboolean dma_auto_test_button( GtkWidget *Widget, gpointer Data )
 			creat_file_selection(DmaWriteFileSelection, ".txt", &OpenDmaWriteFile, &CancelDmaOpenFile, &CloseDmaOpenFile);
 			
 			printf_info("Start DMA Auto Test\n");
+			//printf_info("play\n");
+			//		audio_stream(text);
 		}
 		else
 		{
