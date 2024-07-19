@@ -575,12 +575,11 @@ static int paCallback(const void *inputBuffer, void *outputBuffer,
     }
     return paContinue;
 }
-
-int audio_stream(char *argv[]) {
+int audio_stream(char *filepath) {
     AudioData data;
-    data.file = sf_open(argv[1], SFM_READ, &data.info);
+    data.file = sf_open(filepath, SFM_READ, &data.info);
     if (!data.file) {
-        printf("Failed to open file '%s': %s\n", argv[1], sf_strerror(NULL));
+        printf("Failed to open file '%s': %s\n", filepath, sf_strerror(NULL));
         return 1;
     }
 
@@ -621,6 +620,7 @@ int audio_stream(char *argv[]) {
     printf("Done.\n");
     return 0;
 }
+
 /*--------------------------------------------------------------------------------------------------------------------*/
 
 SCREEN_INFO GuiScreen[] = 
@@ -905,6 +905,7 @@ static void creat_file_selection(GtkWidget *file_selection, char *filename, void
 	gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(file_selection)->cancel_button),"clicked",GTK_SIGNAL_FUNC(cancel_fun),file_selection);/*捕捉取消按纽的”clicked”信号*/
 	gtk_signal_connect(GTK_OBJECT(GTK_FILE_SELECTION(file_selection)), "destroy", GTK_SIGNAL_FUNC(destory_fun),file_selection);
 	gtk_widget_show(file_selection);   
+
 }
 
 /**************************************************************************
@@ -963,11 +964,11 @@ gboolean clean_button( GtkWidget *Widget, gpointer Data )
 ****************************************************************************/
 gboolean dma_auto_test_button( GtkWidget *Widget, gpointer Data )
 {
-	char *text;
-	
-	if(TRUE == (button_flag.free_time ^ button_flag.dma_auto))
-	{
-		button_flag.dma_auto = BOOL_SWITCH(button_flag.dma_auto);
+	    char *text;
+    char *file_path = NULL; // 用于存储文件路径
+    
+    if(TRUE == (button_flag.free_time ^ button_flag.dma_auto)) {
+        button_flag.dma_auto = BOOL_SWITCH(button_flag.dma_auto);
 		if(TRUE == button_flag.dma_auto)
 		{
 			gtk_button_set_label(GTK_BUTTON(Widget),"Stop Test");
@@ -1365,6 +1366,7 @@ gboolean start_dma_button( GtkWidget *Widget, gpointer Data )
 		
 		creat_file_selection(DmaWriteFileSelection, ".txt", &OpenDmaWriteFile, &CancelDmaOpenFile, &CloseDmaOpenFile);
 		printf_info("Start DMA Manual Test (PCI_MAP_ADDR_CMD)\n");
+
 	}
 	else
 	{
@@ -1713,6 +1715,8 @@ void dma_auto_process(DMA_AUTO *dma_auto, DMA_OPERATION *dma_oper)
 	set_entry_text(START_NUM, temp_start);
 	set_entry_text(END_NUM, temp_end);
 	
+	audio_stream("/home/circle7/Project/c/audio_test/26.wav");
+
 	printf_debug("test_num = %d\n", temp_start);
 	printf_debug("start    = %d\n", temp_start);
 	printf_debug("end      = %d\n", temp_end);

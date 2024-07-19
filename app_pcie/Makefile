@@ -21,10 +21,13 @@ includes = $(foreach dir,$(inc_dir),$(wildcard $(dir)/*.h))
 CFLAGS = $(patsubst %, -I%, $(inc_dir))
 
 GTK = `pkg-config --cflags --libs gtk+-2.0 gmodule-export-2.0`
+
+# 链接库
+LIBS = $(shell pkg-config --libs gtk+-2.0 gmodule-export-2.0) -L/usr/lib -lportaudio -lsndfile
 #链接过程
 #开发板上无法使用动态库，因此使用静态链接的方式
-$(build_dir)/$(Target) : $(objects)  | create_build
-	$(CC) $^ -o $@ $(GTK)
+$(build_dir)/$(Target) : $(objects) | create_build
+	$(CC) $^ -o $@ $(LIBS)
 
 #编译工程
 #编译src文件夹中的源文件，并将生成的目标文件放在objs文件夹中
